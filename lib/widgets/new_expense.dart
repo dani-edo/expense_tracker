@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:expense_tracker/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({Key? key}) : super(key: key);
@@ -10,16 +11,20 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
 
-  void _presentDatePicker() {
+  void _presentDatePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
-    showDatePicker(
+    final pickedDate = await showDatePicker(
       context: context,
       initialDate: now,
       firstDate: firstDate,
       lastDate: now,
     );
+    setState(() {
+      _selectedDate = pickedDate;
+    });
   }
 
   @override
@@ -45,6 +50,7 @@ class _NewExpenseState extends State<NewExpense> {
           Row(
             children: [
               Expanded(
+                flex: 2,
                 child: TextField(
                   controller: _amountController,
                   keyboardType: TextInputType.number,
@@ -58,11 +64,16 @@ class _NewExpenseState extends State<NewExpense> {
                 width: 16,
               ),
               Expanded(
+                flex: 3,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Selected date'),
+                    Text(
+                      _selectedDate == null
+                          ? 'No date selected'
+                          : formatter.format(_selectedDate!),
+                    ),
                     IconButton(
                       onPressed: _presentDatePicker,
                       icon: const Icon(
@@ -88,6 +99,7 @@ class _NewExpenseState extends State<NewExpense> {
                 onPressed: () {
                   print(_titleController.text);
                   print(_amountController.text);
+                  print(_selectedDate);
                 },
                 child: const Text(
                   'Save Expense',
