@@ -11,20 +11,7 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  final List<Expense> _registerExpenses = [
-    Expense(
-      amount: 19.99,
-      title: 'Flutter Course',
-      date: DateTime.now(),
-      category: Category.work,
-    ),
-    Expense(
-      amount: 15.69,
-      title: 'Cinema',
-      date: DateTime.now(),
-      category: Category.leisure,
-    ),
-  ];
+  final List<Expense> _registerExpenses = [];
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
@@ -48,6 +35,17 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('No expenses found. Start adding some!'),
+    );
+
+    if (_registerExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registerExpenses,
+        removeExpense: _removeExpense,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -64,10 +62,8 @@ class _ExpensesState extends State<Expenses> {
         children: [
           const Text('The chart'),
           Expanded(
-              child: ExpensesList(
-            expenses: _registerExpenses,
-            removeExpense: _removeExpense,
-          ))
+            child: mainContent,
+          )
         ],
       ),
     );
