@@ -15,16 +15,34 @@ class _ExpensesState extends State<Expenses> {
   final List<Expense> _registerExpenses = [
     Expense(
       amount: 10,
-      title: 'Cinema kerad',
+      title: 'Watch Movie',
       date: DateTime.parse('2023-10-24'),
       category: Category.leisure,
     ),
     Expense(
       amount: 30,
-      title: 'meal barba',
+      title: 'Bakso',
       date: DateTime.parse('2023-10-30'),
       category: Category.food,
-    )
+    ),
+    Expense(
+      amount: 100,
+      title: 'Tokyo January',
+      date: DateTime.parse('2024-01-28'),
+      category: Category.travel,
+    ),
+    Expense(
+      amount: 8,
+      title: 'Course',
+      date: DateTime.parse('2024-01-28'),
+      category: Category.work,
+    ),
+    Expense(
+      amount: 8,
+      title: 'Books',
+      date: DateTime.parse('2024-01-28'),
+      category: Category.work,
+    ),
   ];
 
   void _openAddExpenseOverlay() {
